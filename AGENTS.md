@@ -320,7 +320,21 @@ docker exec -it mall-redis redis-cli -a redis123 ping   :: 期望 PONG
 | 改接口 / 写页面 | `design/03-dev-doc-plan.md` §2（契约模板）+ `design/02-architecture.md` §5 |
 | 动订单 / 库存 / 规格 | `design/01-domain-decisions.md` |
 | 配环境 / 排查依赖 | `design/00-env-inventory.md` + 本文件 §4、§11 |
+| 每天开工前自查 | `design/04-preflight-checklist.md` |
 | 写课程报告 | `design/03-dev-doc-plan.md` §4（章节映射表） |
+
+---
+
+## 13. Git 与多会话协作
+
+- 远程：`https://github.com/dbq2025/DeepSeek-campus_mall-10.30.git`，主分支 `main`，已配 `credential.helper=manager`。
+- 提交格式：`<type>(<scope>): <subject>`，type ∈ feat/fix/docs/refactor/test/chore，scope ∈ front/back/db/docs/build。
+- 一个可验收单元一次提交；禁止 `push -f` 到 main；禁止提交 `target/`、`node_modules/`、`dist/`、`data/`、`upload/`、`.workbuddy/`。
+- **两个 AI 会话并行时**（前端窗口 / 后端窗口）：
+  - 文件所有权：前端只改 `codes/frontend/**`，后端只改 `codes/backend/**`；`AGENTS.md`、`docker-compose.yml`、`.gitignore` 由用户本人改；`design/**` 只由契约窗口改。
+  - 依赖冻结：任何一方都不得擅自改 `pom.xml` / `package.json` 的版本，新增依赖需用户确认并立即通知另一方 `pull`。
+  - 提交串行：不要两个终端同时 commit（`.git/index.lock` 冲突）；提交前先 `git pull --rebase`。
+  - 共享资源：同一时间只跑一个后端（8080）；MySQL 库共用，前端默认走 mock；Redis key 统一 `mall:` 前缀。
 
 ---
 
