@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: campus-mall
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.gdufe.mall.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+mall:
+  jwt:
+    # 生产环境必须用环境变量覆盖，禁止把真实密钥提交到仓库
+    secret: ${MALL_JWT_SECRET:campus-mall-dev-secret-key-2026-please-change-me}
+    expire-hours: 2
+  upload:
+    dir: ./upload
+  cache:
+    # local（默认，无需中间件） / redis（需先启动 Redis）
+    type: local
+
+logging:
+  level:
+    com.gdufe.mall: info

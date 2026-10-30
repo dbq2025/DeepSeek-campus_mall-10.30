@@ -1,0 +1,29 @@
+# ---------- 后端 ----------
+codes/backend/target/
+codes/backend/upload/
+codes/backend/logs/
+*.log
+*.class
+
+# ---------- 前端 ----------
+codes/frontend/node_modules/
+codes/frontend/dist/
+codes/frontend/.vite/
+codes/frontend/*.local
+
+# ---------- IDE / 系统 / 工具 ----------
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+.workbuddy/
+
+# ---------- 本地运行数据 ----------
+data/
+upload/
+logs/
+
+# ---------- 敏感与环境 ----------
+.env.local
+application-prod.yml

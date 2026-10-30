@@ -1,0 +1,25 @@
+# 本地开发依赖服务（Docker Desktop）
+# 启动：docker compose up -d
+# 停止：docker compose down
+# 注意：Docker Desktop 必须先启动并处于 Running 状态
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: mall-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+      - --requirepass
+      - redis123
+      - --appendonly
+      - "yes"
+    volumes:
+      - ./data/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
