@@ -21,6 +21,13 @@ export default defineConfig(({ mode }) => {
         '/api': {
           target,
           changeOrigin: true
+        },
+        // 图片走契约路径 /files/**，后端实际挂在 context-path 下（/api/files/**）。
+        // 这里补前缀，保证 seed 图片与上传图片都能被浏览器直接访问。
+        '/files': {
+          target,
+          changeOrigin: true,
+          rewrite: (path) => `/api${path}`
         }
       }
     },
