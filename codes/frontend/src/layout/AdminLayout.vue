@@ -11,9 +11,6 @@
         :collapse-transition="false"
         router
         class="menu"
-        background-color="#1f2d3d"
-        text-color="#c0c4cc"
-        active-text-color="#ffffff"
       >
         <el-menu-item index="/admin">
           <el-icon><DataLine /></el-icon>
@@ -107,8 +104,9 @@ async function onCommand(command) {
 .sider {
   width: var(--mall-admin-sider);
   flex: 0 0 var(--mall-admin-sider);
-  background: #1f2d3d;
-  transition: width 0.2s, flex-basis 0.2s;
+  background: linear-gradient(180deg, #111827 0%, #0b1220 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  transition: width 0.2s var(--mall-ease), flex-basis 0.2s var(--mall-ease);
   overflow-x: hidden;
 }
 
@@ -122,31 +120,74 @@ async function onCommand(command) {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 16px;
+  padding: 0 18px;
   color: #fff;
   font-weight: 600;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   white-space: nowrap;
 }
 
 .brand__mark {
-  width: 26px;
-  height: 26px;
-  flex: 0 0 26px;
-  border-radius: 6px;
-  background: var(--mall-primary);
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 9px;
+  background: var(--mall-primary-gradient);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 15px;
+  box-shadow: 0 6px 14px -6px rgba(79, 70, 229, 0.9);
+}
+
+.brand__text {
+  font-size: 15px;
+  letter-spacing: 0.01em;
 }
 
 .menu {
+  --el-menu-bg-color: transparent;
+  --el-menu-text-color: #cbd5e1;
+  --el-menu-active-color: #ffffff;
+  --el-menu-hover-bg-color: rgba(255, 255, 255, 0.06);
+  --el-menu-item-height: 42px;
   border-right: none;
+  padding: 10px 10px 16px;
+  background: transparent;
+}
+
+.menu :deep(.el-menu-item) {
+  height: 42px;
+  line-height: 42px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.menu :deep(.el-menu-item .el-icon) {
+  font-size: 18px;
+}
+
+.menu :deep(.el-menu-item:hover) {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
 }
 
 .menu :deep(.el-menu-item.is-active) {
-  background: var(--mall-primary);
+  background: linear-gradient(90deg, rgba(79, 70, 229, 0.95) 0%, rgba(124, 58, 237, 0.88) 100%);
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 10px 24px -12px rgba(79, 70, 229, 0.9);
+}
+
+.sider--collapsed .menu {
+  padding: 10px 8px;
+}
+
+.sider--collapsed .menu :deep(.el-menu-item) {
+  padding: 0 !important;
+  justify-content: center;
 }
 
 .body {
@@ -159,37 +200,64 @@ async function onCommand(command) {
 .topbar {
   height: var(--mall-admin-header-h);
   flex: 0 0 var(--mall-admin-header-h);
-  background: var(--mall-bg-white);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
   border-bottom: 1px solid var(--mall-border-light);
   display: flex;
   align-items: center;
-  gap: var(--mall-space-1);
-  padding: 0 var(--mall-space-2);
+  gap: 10px;
+  padding: 0 20px;
 }
 
 .topbar__title {
   font-size: 15px;
   font-weight: 600;
+  color: var(--mall-text-1);
 }
 
 .topbar__right {
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: var(--mall-space-2);
+  gap: 16px;
+}
+
+.topbar__right :deep(.el-button.is-link) {
+  color: var(--mall-text-2);
+  font-weight: 400;
+}
+
+.topbar__right :deep(.el-button.is-link:hover) {
+  color: var(--mall-primary);
 }
 
 .user-entry {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  padding: 4px 10px 4px 4px;
+  border-radius: 999px;
   cursor: pointer;
   color: var(--mall-text-2);
+  transition: background-color var(--mall-dur-fast) ease-out;
+}
+
+.user-entry:hover {
+  background: var(--mall-bg-subtle);
+}
+
+.user-entry :deep(.el-avatar) {
+  background: var(--mall-primary-soft);
+  color: var(--mall-primary);
+  font-weight: 600;
+  border: 2px solid #fff;
+  box-shadow: var(--mall-shadow-xs);
 }
 
 .content {
   flex: 1;
-  padding: var(--mall-space-2);
+  padding: 20px 24px 28px;
   min-width: 0;
 }
 
@@ -199,13 +267,21 @@ async function onCommand(command) {
     flex-basis: var(--mall-admin-sider-collapsed);
   }
 
+  .brand {
+    padding: 0 17px;
+  }
+
   .brand__text,
   .user-entry__name {
     display: none;
   }
 
+  .topbar {
+    padding: 0 12px;
+  }
+
   .content {
-    padding: 12px;
+    padding: 14px 12px 20px;
   }
 }
 </style>

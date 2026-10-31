@@ -109,13 +109,13 @@ const trendOption = computed(() => ({
     type: 'category',
     boundaryGap: false,
     data: trend.value.dates.map((date) => String(date).slice(5)),
-    axisLine: { lineStyle: { color: '#dcdfe6' } },
-    axisLabel: { color: '#909399', interval: days.value > 10 ? 'auto' : 0, rotate: days.value > 10 ? 40 : 0 }
+    axisLine: { lineStyle: { color: '#e2e8f0' } },
+    axisLabel: { color: '#94a3b8', interval: days.value > 10 ? 'auto' : 0, rotate: days.value > 10 ? 40 : 0 }
   },
   yAxis: {
     type: 'value',
-    splitLine: { lineStyle: { color: '#ebeef5' } },
-    axisLabel: { color: '#909399' }
+    splitLine: { lineStyle: { color: '#eef2f7' } },
+    axisLabel: { color: '#94a3b8' }
   },
   series: [
     {
@@ -124,22 +124,24 @@ const trendOption = computed(() => ({
       smooth: true,
       showSymbol: days.value <= 10,
       data: trend.value.amounts.map((item) => Number(item)),
-      itemStyle: { color: '#409eff' },
+      itemStyle: { color: '#4f46e5' },
       lineStyle: { width: 2 },
-      areaStyle: { color: 'rgba(64,158,255,0.12)' }
+      areaStyle: { color: 'rgba(79,70,229,0.12)' }
     }
   ]
 }))
 
 const statusOption = computed(() => ({
+  color: ['#4f46e5', '#7c3aed', '#12b76a', '#f79009', '#94a3b8'],
   tooltip: { trigger: 'item', formatter: '{b}：{c} 单（{d}%）' },
-  legend: { bottom: 0, icon: 'circle', itemWidth: 8, itemHeight: 8, textStyle: { color: '#606266' } },
+  legend: { bottom: 0, icon: 'circle', itemWidth: 8, itemHeight: 8, textStyle: { color: '#64748b' } },
   series: [
     {
       type: 'pie',
-      radius: ['45%', '68%'],
+      radius: ['48%', '70%'],
       center: ['50%', '44%'],
       label: { show: false },
+      itemStyle: { borderColor: '#ffffff', borderWidth: 2 },
       data: statusStat.value.map((item) => ({ name: item.statusText, value: item.count }))
     }
   ]
@@ -150,15 +152,15 @@ const topOption = computed(() => ({
   grid: { left: 8, right: 24, top: 16, bottom: 8, containLabel: true },
   xAxis: {
     type: 'value',
-    splitLine: { lineStyle: { color: '#ebeef5' } },
-    axisLabel: { color: '#909399' }
+    splitLine: { lineStyle: { color: '#eef2f7' } },
+    axisLabel: { color: '#94a3b8' }
   },
   yAxis: {
     type: 'category',
     inverse: true,
     data: topProducts.value.map((item) => item.productName),
-    axisLine: { lineStyle: { color: '#dcdfe6' } },
-    axisLabel: { color: '#606266', width: 110, overflow: 'truncate' }
+    axisLine: { lineStyle: { color: '#e2e8f0' } },
+    axisLabel: { color: '#64748b', width: 110, overflow: 'truncate' }
   },
   series: [
     {
@@ -166,7 +168,7 @@ const topOption = computed(() => ({
       type: 'bar',
       barWidth: 14,
       data: topProducts.value.map((item) => item.sales),
-      itemStyle: { color: '#409eff', borderRadius: [0, 4, 4, 0] }
+      itemStyle: { color: '#4f46e5', borderRadius: [0, 4, 4, 0] }
     }
   ]
 }))
@@ -210,7 +212,11 @@ onMounted(loadAll)
 .stats {
   display: flex;
   flex-direction: column;
-  gap: var(--mall-space-2);
+  gap: 16px;
+}
+
+.stats > .page-card {
+  padding: 20px 24px;
 }
 
 .stats__title {
@@ -220,13 +226,14 @@ onMounted(loadAll)
 .stat-cards {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--mall-space-2);
+  gap: 16px;
 }
 
 .stat-card {
-  background: var(--mall-bg);
+  background: var(--mall-bg-subtle);
+  border: 1px solid var(--mall-border-light);
   border-radius: var(--mall-radius);
-  padding: 16px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -238,8 +245,11 @@ onMounted(loadAll)
 }
 
 .stat-card__value {
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--mall-text-1);
 }
 
 .stat-card__value--price {
@@ -251,15 +261,15 @@ onMounted(loadAll)
 }
 
 .block-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .chart-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--mall-space-2);
+  gap: 16px;
 }
 
 .stats__error {
@@ -277,8 +287,12 @@ onMounted(loadAll)
 }
 
 @media (max-width: 767px) {
+  .stats > .page-card {
+    padding: 16px;
+  }
+
   .stat-card__value {
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 </style>

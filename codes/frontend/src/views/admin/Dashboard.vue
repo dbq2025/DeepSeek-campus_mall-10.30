@@ -6,7 +6,15 @@
 
     <template v-else>
       <div class="metric-grid">
-        <div v-for="card in metrics" :key="card.key" class="metric">
+        <div v-for="card in metrics" :key="card.key" class="metric" :class="`metric--${card.key}`">
+          <span class="metric__icon">
+            <el-icon :size="20">
+              <Tickets v-if="card.key === 'todayOrderCount'" />
+              <Coin v-else-if="card.key === 'todaySalesAmount'" />
+              <Van v-else-if="card.key === 'pendingShipmentCount'" />
+              <Goods v-else />
+            </el-icon>
+          </span>
           <div class="metric__label">{{ card.label }}</div>
           <div class="metric__value" :class="card.className">
             <span v-if="loading" class="skeleton-block metric__skeleton"></span>
@@ -120,13 +128,13 @@ const salesOption = computed(() => ({
   xAxis: {
     type: 'category',
     data: sales.value.dates.map((date) => String(date).slice(5)),
-    axisLine: { lineStyle: { color: '#dcdfe6' } },
-    axisLabel: { color: '#909399' }
+    axisLine: { lineStyle: { color: '#e2e8f0' } },
+    axisLabel: { color: '#94a3b8' }
   },
   yAxis: {
     type: 'value',
-    splitLine: { lineStyle: { color: '#ebeef5' } },
-    axisLabel: { color: '#909399' }
+    splitLine: { lineStyle: { color: '#eef2f7' } },
+    axisLabel: { color: '#94a3b8' }
   },
   series: [
     {
@@ -135,23 +143,26 @@ const salesOption = computed(() => ({
       smooth: true,
       symbolSize: 6,
       data: sales.value.amounts.map((amount) => Number(amount)),
-      itemStyle: { color: '#409eff' },
-      areaStyle: { color: 'rgba(64,158,255,0.12)' }
+      itemStyle: { color: '#4f46e5' },
+      lineStyle: { width: 2.4 },
+      areaStyle: { color: 'rgba(79,70,229,0.12)' }
     }
   ]
 }))
 
 const statusOption = computed(() => ({
+  color: ['#4f46e5', '#7c3aed', '#12b76a', '#f79009', '#94a3b8'],
   tooltip: { trigger: 'item', formatter: '{b}：{c} 单（{d}%）' },
-  legend: { bottom: 0, icon: 'circle', itemWidth: 8, itemHeight: 8, textStyle: { color: '#606266' } },
+  legend: { bottom: 0, icon: 'circle', itemWidth: 8, itemHeight: 8, textStyle: { color: '#64748b' } },
   series: [
     {
       name: '订单状态',
       type: 'pie',
-      radius: ['45%', '68%'],
+      radius: ['48%', '70%'],
       center: ['50%', '45%'],
       avoidLabelOverlap: true,
       label: { show: false },
+      itemStyle: { borderColor: '#ffffff', borderWidth: 2 },
       data: statusStat.value.map((item) => ({ name: item.statusText, value: item.count }))
     }
   ]
@@ -191,25 +202,74 @@ onMounted(load)
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--mall-space-2);
+  gap: 16px;
 }
 
 .metric {
+  position: relative;
+  overflow: hidden;
   background: var(--mall-bg-white);
-  border-radius: var(--mall-radius);
-  padding: 18px;
+  border: 1px solid var(--mall-border-light);
+  border-radius: var(--mall-radius-lg);
+  box-shadow: var(--mall-shadow-card);
+  padding: 20px;
+}
+
+.metric::after {
+  content: '';
+  position: absolute;
+  right: -50px;
+  top: -70px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.09), transparent 70%);
+  pointer-events: none;
+}
+
+.metric__icon {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mall-primary-soft);
+  color: var(--mall-primary);
+}
+
+.metric--todaySalesAmount .metric__icon {
+  background: var(--mall-price-soft);
+  color: var(--mall-price);
+}
+
+.metric--pendingShipmentCount .metric__icon {
+  background: var(--mall-warning-soft);
+  color: var(--mall-warning);
+}
+
+.metric--totalProductCount .metric__icon {
+  background: var(--mall-info-soft);
+  color: var(--mall-info);
 }
 
 .metric__label {
   font-size: 13px;
+  font-weight: 500;
   color: var(--mall-text-3);
 }
 
 .metric__value {
-  margin-top: 8px;
-  font-size: 26px;
-  font-weight: 600;
-  line-height: 1.2;
+  margin-top: 10px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--mall-text-1);
+  font-variant-numeric: tabular-nums;
 }
 
 .metric__value--price {
@@ -227,30 +287,40 @@ onMounted(load)
 }
 
 .metric__hint {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 12px;
 }
 
 .chart-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: var(--mall-space-2);
+  gap: 16px;
+}
+
+.dashboard > .page-card {
+  padding: 20px 24px;
 }
 
 .card-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .card-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .card-link {
-  font-size: 12px;
+  font-size: 13px;
+  color: var(--mall-text-3);
+  transition: color var(--mall-dur-fast) ease-out;
+}
+
+.card-link:hover {
   color: var(--mall-primary);
 }
 

@@ -207,19 +207,24 @@ onMounted(async () => {
   flex-direction: column;
 }
 
+.admin-product .page-card {
+  padding: 20px 24px;
+}
+
 .product-cell {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .product-cell__image {
-  width: 44px;
-  height: 44px;
-  flex: 0 0 44px;
-  border-radius: var(--mall-radius-sm);
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border-radius: 10px;
   overflow: hidden;
-  background: var(--mall-bg);
+  background: var(--mall-bg-subtle);
+  border: 1px solid var(--mall-border-light);
 }
 
 .product-cell__fallback {
@@ -236,8 +241,9 @@ onMounted(async () => {
 }
 
 .product-cell__name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
+  color: var(--mall-text-1);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -245,6 +251,7 @@ onMounted(async () => {
 
 .product-cell__subtitle {
   font-size: 12px;
+  margin-top: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -253,5 +260,11 @@ onMounted(async () => {
 .text-danger {
   color: var(--mall-danger);
   font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .admin-product .page-card {
+    padding: 14px 12px;
+  }
 }
 </style>

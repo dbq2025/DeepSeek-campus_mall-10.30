@@ -232,7 +232,11 @@ onMounted(load)
 .admin-order-detail {
   display: flex;
   flex-direction: column;
-  gap: var(--mall-space-2);
+  gap: 16px;
+}
+
+.admin-order-detail > .page-card {
+  padding: 20px 24px;
 }
 
 .head {
@@ -245,9 +249,11 @@ onMounted(load)
 
 .head__no {
   margin-top: 8px;
-  font-size: 18px;
-  font-weight: 600;
-  font-family: Consolas, Monaco, monospace;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--mall-text-1);
 }
 
 .head__actions {
@@ -256,23 +262,29 @@ onMounted(load)
   flex-wrap: wrap;
 }
 
+.head__actions :deep(.el-button) {
+  height: 36px;
+  border-radius: 8px;
+}
+
 .detail-skeleton {
   height: 60px;
   margin-bottom: 12px;
 }
 
 .cancel-alert {
-  margin-top: var(--mall-space-2);
+  margin-top: 16px;
+  border-radius: 10px;
 }
 
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--mall-space-2);
+  gap: 16px;
 }
 
 .block-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 12px;
 }
@@ -280,16 +292,17 @@ onMounted(load)
 .item-cell {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .item-cell__image {
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
-  border-radius: var(--mall-radius-sm);
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 10px;
   overflow: hidden;
-  background: var(--mall-bg);
+  background: var(--mall-bg-subtle);
+  border: 1px solid var(--mall-border-light);
 }
 
 .item-cell__fallback {
@@ -302,33 +315,46 @@ onMounted(load)
 }
 
 .amount-box {
-  margin-top: var(--mall-space-2);
+  margin-top: 20px;
+  margin-left: auto;
+  width: 320px;
+  padding: 16px 20px;
+  background: var(--mall-bg-subtle);
+  border-radius: var(--mall-radius);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
+  gap: 8px;
 }
 
 .amount-row {
   display: flex;
   justify-content: space-between;
   gap: var(--mall-space-2);
-  min-width: 220px;
 }
 
 .amount-row--total {
   align-items: baseline;
   border-top: 1px dashed var(--mall-border);
-  padding-top: 8px;
+  padding-top: 10px;
 }
 
 .amount-value {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 @media (max-width: 991px) {
   .info-grid {
     grid-template-columns: 1fr;
+  }
+
+  .amount-box {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-order-detail > .page-card {
+    padding: 16px;
   }
 }
 </style>

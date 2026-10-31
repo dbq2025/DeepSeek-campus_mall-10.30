@@ -100,4 +100,21 @@ defineEmits(['retry', 'empty-action', 'selection-change'])
 .base-table {
   width: 100%;
 }
+
+.base-table :deep(.el-table) {
+  background: transparent;
+}
+
+/* 去掉表格自带的底部横线，交给卡片边界表达 */
+.base-table :deep(.el-table__inner-wrapper::before) {
+  display: none;
+}
+
+.base-table :deep(.el-table tr:last-child td.el-table__cell) {
+  border-bottom: none;
+}
+
+.base-table :deep(.el-table__row) {
+  transition: background-color var(--mall-dur-fast) ease-out;
+}
 </style>

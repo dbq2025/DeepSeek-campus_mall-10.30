@@ -224,15 +224,26 @@ onMounted(load)
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--mall-space-2);
+  margin-bottom: 20px;
 }
 
 .product-edit__head .page-title {
   margin-bottom: 0;
+  font-size: 22px;
 }
 
 .product-edit__form {
-  max-width: 860px;
+  max-width: 900px;
+}
+
+.product-edit__form :deep(.el-form-item) {
+  margin-bottom: 20px;
+}
+
+.product-edit__form :deep(.el-form-item__label) {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mall-text-2);
 }
 
 .product-edit__loading {

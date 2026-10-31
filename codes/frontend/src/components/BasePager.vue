@@ -43,13 +43,24 @@ function onSizeChange(size) {
 .base-pager {
   display: flex;
   justify-content: flex-end;
-  padding-top: var(--mall-space-2);
+  padding-top: 20px;
   overflow-x: auto;
+}
+
+.base-pager :deep(.el-pagination) {
+  --el-pagination-button-bg-color: var(--mall-bg-subtle);
+  font-weight: 400;
+}
+
+.base-pager :deep(.el-pager li) {
+  border-radius: 8px;
+  font-weight: 500;
 }
 
 @media (max-width: 767px) {
   .base-pager {
     justify-content: center;
+    padding-top: 16px;
   }
 }
 </style>

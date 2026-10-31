@@ -97,9 +97,32 @@ defineExpose({ complete, specText })
   font-size: 13px;
 }
 
+.spec-row :deep(.el-radio-button) {
+  margin: 0 8px 8px 0;
+}
+
 .spec-row :deep(.el-radio-button__inner) {
-  border-radius: var(--mall-radius-sm);
-  border-left: 1px solid var(--el-border-color);
+  padding: 7px 16px;
+  border: 1px solid var(--mall-border-light) !important;
+  border-radius: 999px !important;
+  background: var(--mall-bg-subtle);
+  color: var(--mall-text-2);
+  box-shadow: none !important;
+  transition: background-color var(--mall-dur-fast) ease-out, border-color var(--mall-dur-fast) ease-out,
+    color var(--mall-dur-fast) ease-out;
+}
+
+.spec-row :deep(.el-radio-button__inner:hover) {
+  border-color: rgba(79, 70, 229, 0.35) !important;
+  color: var(--mall-primary);
+}
+
+.spec-row :deep(.el-radio-button__original-radio:checked + .el-radio-button__inner) {
+  background: var(--mall-primary-soft);
+  border-color: var(--mall-primary) !important;
+  color: var(--mall-primary);
+  font-weight: 500;
+  box-shadow: none !important;
 }
 
 .spec-selector__tip {

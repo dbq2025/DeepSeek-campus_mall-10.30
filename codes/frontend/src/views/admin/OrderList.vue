@@ -186,13 +186,26 @@ async function confirmShip() {
   flex-direction: column;
 }
 
+.admin-order .page-card {
+  padding: 20px 24px;
+}
+
 .order-no {
-  font-family: Consolas, Monaco, monospace;
   font-size: 12px;
+  color: var(--mall-text-2);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
 }
 
 .ship__tip {
   font-size: 12px;
   margin-bottom: 10px;
+  color: var(--mall-text-3);
+}
+
+@media (max-width: 767px) {
+  .admin-order .page-card {
+    padding: 14px 12px;
+  }
 }
 </style>

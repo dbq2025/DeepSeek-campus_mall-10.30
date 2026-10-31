@@ -83,7 +83,7 @@ function clear() {
 .preview {
   width: 120px;
   height: 120px;
-  border-radius: var(--mall-radius-sm);
+  border-radius: var(--mall-radius);
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -95,15 +95,18 @@ function clear() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
   color: var(--mall-text-3);
   font-size: 12px;
-  background: var(--mall-bg);
+  background: var(--mall-bg-subtle);
+  transition: border-color var(--mall-dur-fast) ease-out, color var(--mall-dur-fast) ease-out,
+    background-color var(--mall-dur-fast) ease-out;
 }
 
 .placeholder:hover {
   border-color: var(--mall-primary);
   color: var(--mall-primary);
+  background: var(--mall-primary-soft);
 }
 
 .preview img {
@@ -119,12 +122,16 @@ function clear() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
   color: #fff;
   font-size: 12px;
-  background: rgba(0, 0, 0, 0.45);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.6));
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity var(--mall-dur) var(--mall-ease);
+}
+
+.preview:hover .preview__mask {
+  opacity: 1;
 }
 
 .preview:hover .preview__mask {

@@ -172,13 +172,24 @@ function onPageChange({ page, size }) {
 </script>
 
 <style scoped>
+.category .page-card {
+  padding: 20px 24px;
+}
+
 .category__hint {
   margin-left: 10px;
   font-size: 12px;
+  color: var(--mall-text-3);
 }
 
 /* createTime 列统一格式化 */
 :deep(.el-table) .cell {
   word-break: break-word;
+}
+
+@media (max-width: 767px) {
+  .category .page-card {
+    padding: 14px 12px;
+  }
 }
 </style>
