@@ -130,7 +130,7 @@ try {
   await client.send('Emulation.setDeviceMetricsOverride', {
     width,
     height,
-    deviceScaleFactor: 1,
+    deviceScaleFactor: Number(args.dpr || 1),
     mobile: width < 600
   })
 
@@ -151,6 +151,20 @@ try {
   await client.send('Page.navigate', { url })
   await loaded
   await sleep(waitMs)
+
+  // 等加载遮罩与骨架屏退场，避免截到「半透明」的中间态
+  for (let i = 0; i < 16; i += 1) {
+    const busy = await client.send('Runtime.evaluate', {
+      expression: `(() => {
+        const masks = [...document.querySelectorAll('.el-loading-mask')];
+        const fading = masks.some((m) => Number(getComputedStyle(m).opacity) > 0.05 && getComputedStyle(m).display !== 'none');
+        return fading || document.querySelectorAll('.skeleton-block').length > 0;
+      })()`,
+      returnByValue: true
+    })
+    if (!busy.result.value) break
+    await sleep(150)
+  }
 
   const metrics = await client.send('Runtime.evaluate', {
     expression: `(() => {
@@ -176,6 +190,15 @@ try {
   })
 
   console.log(JSON.stringify(metrics.result.value, null, 2))
+
+  if (args.eval) {
+    const extra = await client.send('Runtime.evaluate', {
+      expression: args.eval,
+      returnByValue: true,
+      awaitPromise: true
+    })
+    console.log('eval:', JSON.stringify(extra.result.value, null, 2))
+  }
 
   if (args.out) {
     const shot = await client.send('Page.captureScreenshot', { format: 'png' })

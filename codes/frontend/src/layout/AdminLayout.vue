@@ -265,6 +265,7 @@ async function onCommand(command) {
   .sider {
     width: var(--mall-admin-sider-collapsed);
     flex-basis: var(--mall-admin-sider-collapsed);
+    overflow: hidden;
   }
 
   .brand {
@@ -274,6 +275,23 @@ async function onCommand(command) {
   .brand__text,
   .user-entry__name {
     display: none;
+  }
+
+  /* 图标栏模式：菜单只留图标，文字裁掉而不是露半个字 */
+  .menu {
+    padding: 10px 8px;
+  }
+
+  .menu :deep(.el-menu-item) {
+    width: 48px;
+    padding: 0 !important;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 0; /* 文字是裸文本节点，用字号归零隐藏；图标另有字号 */
+  }
+
+  .menu :deep(.el-menu-item .el-icon) {
+    font-size: 18px;
   }
 
   .topbar {

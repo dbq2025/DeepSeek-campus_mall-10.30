@@ -24,6 +24,9 @@ data/
 upload/
 logs/
 
+# ---------- 验收截图（本地证据，不入库） ----------
+design/shots/
+
 # ---------- 敏感与环境 ----------
 .env.local
 application-prod.yml
