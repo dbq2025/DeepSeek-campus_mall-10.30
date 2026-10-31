@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdufe.mall.common.result.Result;
 import com.gdufe.mall.common.result.ResultCode;
 import com.gdufe.mall.common.security.JwtAuthFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -49,14 +50,18 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/health").permitAll()
+                        // 只放行三个登录入口；/auth/me、/auth/logout 必须登录（契约 AUTH-04/05）
+                        .requestMatchers(HttpMethod.POST,
+                                "/auth/login", "/auth/register", "/auth/admin/login").permitAll()
+                        .requestMatchers("/health").permitAll()
                         .requestMatchers(HttpMethod.GET, "/files/**",
                                 "/front/products/**", "/front/categories/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .exceptionHandling(e -> e
-                        .authenticationEntryPoint((req, res, ex) -> writeJson(res, HttpStatus.UNAUTHORIZED, ResultCode.UNAUTHORIZED))
-                        .accessDeniedHandler((req, res, ex) -> writeJson(res, HttpStatus.FORBIDDEN, ResultCode.FORBIDDEN)))
+                        .authenticationEntryPoint((req, res, ex) -> writeUnauthorized(req, res))
+                        .accessDeniedHandler((req, res, ex) ->
+                                writeJson(res, HttpStatus.FORBIDDEN, ResultCode.FORBIDDEN)))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -78,6 +83,16 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
+    }
+
+    /**
+     * 未通过认证：带 token 但校验失败 -> 2002（令牌无效/过期）；压根没带 -> 2001。
+     * 前端对两者处理一致（清 token 跳登录），但错误语义不能混（契约边界 #5）。
+     */
+    private void writeUnauthorized(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Object jwtError = request.getAttribute(JwtAuthFilter.ATTR_JWT_ERROR);
+        writeJson(response, HttpStatus.UNAUTHORIZED,
+                jwtError == null ? ResultCode.UNAUTHORIZED : ResultCode.TOKEN_INVALID);
     }
 
     private void writeJson(HttpServletResponse response, HttpStatus status, ResultCode code) throws IOException {

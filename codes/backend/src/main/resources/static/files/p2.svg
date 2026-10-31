@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480">
+  <defs>
+    <linearGradient id="p2bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FAF7FF"/>
+      <stop offset="1" stop-color="#E9E0FF"/>
+    </linearGradient>
+    <pattern id="p2stripe" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)">
+      <rect width="13" height="26" fill="#7C3AED" fill-opacity="0.09"/>
+    </pattern>
+  </defs>
+  <rect width="480" height="480" fill="url(#p2bg)"/>
+  <rect width="480" height="480" fill="url(#p2stripe)"/>
+  <circle cx="238" cy="226" r="130" fill="#7C3AED" fill-opacity="0.08"/>
+  <circle cx="238" cy="226" r="128" fill="none" stroke="#7C3AED" stroke-opacity="0.44" stroke-width="2.4"/>
+  <circle cx="238" cy="226" r="74" fill="#7C3AED" fill-opacity="0.18"/>
+  <circle cx="238" cy="226" r="74" fill="none" stroke="#7C3AED" stroke-opacity="0.3" stroke-width="2"/>
+  <g fill="#7C3AED" fill-opacity="0.3">
+    <rect x="128" y="330" width="20" height="20" rx="5"/>
+    <rect x="160" y="330" width="20" height="20" rx="5"/>
+    <rect x="192" y="330" width="20" height="20" rx="5"/>
+    <rect x="128" y="362" width="20" height="20" rx="5"/>
+    <rect x="160" y="362" width="20" height="20" rx="5"/>
+  </g>
+  <path d="M302 330 L366 330 L334 392 Z" fill="#7C3AED" fill-opacity="0.1" stroke="#7C3AED" stroke-opacity="0.34" stroke-width="2"/>
+</svg>

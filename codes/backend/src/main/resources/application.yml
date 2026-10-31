@@ -30,8 +30,14 @@ mall:
   upload:
     dir: ./upload
   cache:
-    # local（默认，无需中间件） / redis（需先启动 Redis）
-    type: local
+    # redis（默认，需 Redis 在跑） / local（无中间件时的降级实现）
+    # 缓存读写失败会降级查库，Redis 挂掉不影响业务；临时切本地：MALL_CACHE_TYPE=local
+    type: ${MALL_CACHE_TYPE:redis}
+  order:
+    # 待付款超时分钟数：超时后由定时任务取消并回补库存
+    timeout-minutes: 30
+    timeout-scan-limit: 100
+    timeout-enabled: true
 
 logging:
   level:

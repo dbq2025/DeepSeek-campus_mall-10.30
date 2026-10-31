@@ -20,11 +20,14 @@ import java.util.List;
 
 /**
  * 解析 Authorization: Bearer <token>，成功则写入 SecurityContext。
- * 解析失败不直接返回 401，交给 SecurityConfig 的 AuthenticationEntryPoint 统一出参。
+ * 解析失败只打标记（ATTR_JWT_ERROR），由 SecurityEntryPoint 决定 2001 还是 2002：
+ * 这样公开接口带过期 token 仍可访问，受保护接口才会被拒。
  */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
+
+    public static final String ATTR_JWT_ERROR = "jwt.error";
 
     private final JwtUtil jwtUtil;
 
@@ -47,7 +50,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(auth);
             } catch (JWTVerificationException ex) {
                 SecurityContextHolder.clearContext();
-                request.setAttribute("jwt.error", ex.getMessage());
+                request.setAttribute(ATTR_JWT_ERROR, ex.getMessage());
             }
         }
         chain.doFilter(request, response);
