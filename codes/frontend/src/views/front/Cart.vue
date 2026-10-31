@@ -25,7 +25,7 @@
     </div>
 
     <template v-else>
-      <div class="page-card">
+      <div class="page-card cart__table-card">
         <el-table
           ref="tableRef"
           :data="items"
@@ -249,11 +249,20 @@ onMounted(load)
 .cart {
   display: flex;
   flex-direction: column;
-  gap: var(--mall-space-2);
+  gap: 20px;
+}
+
+.cart .page-card.toolbar {
+  margin-bottom: 0;
+  padding: 18px 24px;
 }
 
 .cart__title {
   margin-bottom: 0;
+}
+
+.cart__table-card {
+  padding: 8px 12px 4px;
 }
 
 .cart__skeleton {
@@ -263,7 +272,7 @@ onMounted(load)
 
 .cart-item {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   align-items: center;
 }
 
@@ -271,9 +280,10 @@ onMounted(load)
   width: 64px;
   height: 64px;
   flex: 0 0 64px;
-  border-radius: var(--mall-radius-sm);
+  border-radius: 10px;
   overflow: hidden;
-  background: var(--mall-bg);
+  background: var(--mall-bg-subtle);
+  border: 1px solid var(--mall-border-light);
 }
 
 .cart-item__fallback {
@@ -296,6 +306,7 @@ onMounted(load)
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: color var(--mall-dur-fast) ease-out;
 }
 
 .cart-item__name:hover {
@@ -312,45 +323,83 @@ onMounted(load)
   align-items: center;
   justify-content: space-between;
   gap: var(--mall-space-2);
+  padding: 16px 24px;
   position: sticky;
   bottom: 16px;
-  box-shadow: var(--mall-shadow-card);
+  z-index: 5;
+  box-shadow: var(--mall-shadow-pop);
 }
 
 .cart__bar-left {
   display: flex;
   align-items: center;
-  gap: var(--mall-space-2);
+  gap: 20px;
 }
 
 .cart__bar-right {
   display: flex;
   align-items: center;
-  gap: var(--mall-space-2);
+  gap: 20px;
+}
+
+.cart__total {
+  font-size: 14px;
+  color: var(--mall-text-2);
 }
 
 .cart__total-price {
-  font-size: 22px;
+  font-size: 28px;
+  margin-left: 4px;
+}
+
+.cart__bar-right :deep(.el-button--primary) {
+  height: 44px;
+  padding: 0 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  box-shadow: var(--mall-shadow-brand);
 }
 
 .cart__hint {
   text-align: right;
   font-size: 12px;
+  margin-top: -8px;
 }
 
 @media (max-width: 767px) {
+  .cart {
+    gap: 14px;
+  }
+
+  .cart .page-card.toolbar {
+    padding: 14px 16px;
+  }
+
+  .cart__table-card {
+    padding: 6px 8px 2px;
+    overflow-x: auto;
+  }
+
   .cart__bar {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 12px;
+    padding: 14px 16px;
+    bottom: 8px;
   }
 
   .cart__bar-right {
     justify-content: space-between;
+    gap: 10px;
+  }
+
+  .cart__total-price {
+    font-size: 24px;
   }
 
   .cart__hint {
     text-align: left;
+    margin-top: -4px;
   }
 }
 </style>

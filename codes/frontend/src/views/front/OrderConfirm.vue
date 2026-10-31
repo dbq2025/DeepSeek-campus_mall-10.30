@@ -270,17 +270,28 @@ onMounted(() => {
 .confirm {
   display: flex;
   flex-direction: column;
-  gap: var(--mall-space-2);
+  gap: 20px;
+}
+
+.confirm .page-title {
+  font-size: 22px;
+  margin-bottom: 20px;
 }
 
 .confirm__title {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
-  margin-bottom: var(--mall-space-2);
+  margin-bottom: 18px;
 }
 
 .confirm__form {
   max-width: 760px;
+}
+
+.confirm__form :deep(.el-form-item__label) {
+  color: var(--mall-text-3);
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .confirm__skeleton {
@@ -291,16 +302,17 @@ onMounted(() => {
 .confirm-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .confirm-item__image {
   width: 48px;
   height: 48px;
   flex: 0 0 48px;
-  border-radius: var(--mall-radius-sm);
+  border-radius: 8px;
   overflow: hidden;
-  background: var(--mall-bg);
+  background: var(--mall-bg-subtle);
+  border: 1px solid var(--mall-border-light);
 }
 
 .confirm-item__fallback {
@@ -313,11 +325,14 @@ onMounted(() => {
 }
 
 .confirm-item__name {
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--mall-text-1);
 }
 
 .confirm-item__spec {
   font-size: 12px;
+  margin-top: 2px;
 }
 
 .confirm__bar {
@@ -326,16 +341,27 @@ onMounted(() => {
   justify-content: space-between;
   gap: var(--mall-space-2);
   flex-wrap: wrap;
+  padding: 18px 24px;
+  position: sticky;
+  bottom: 16px;
+  z-index: 5;
+  box-shadow: var(--mall-shadow-pop);
 }
 
 .confirm__summary {
   display: flex;
   align-items: baseline;
-  gap: var(--mall-space-2);
+  gap: 20px;
+}
+
+.confirm__amount {
+  font-size: 14px;
+  color: var(--mall-text-2);
 }
 
 .confirm__amount-value {
-  font-size: 22px;
+  font-size: 28px;
+  margin-left: 4px;
 }
 
 .confirm__actions {
@@ -343,15 +369,45 @@ onMounted(() => {
   gap: 10px;
 }
 
+.confirm__actions :deep(.el-button) {
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 10px;
+}
+
+.confirm__actions :deep(.el-button--primary) {
+  box-shadow: var(--mall-shadow-brand);
+}
+
 .confirm__hint {
   text-align: right;
   font-size: 12px;
+  margin-top: -8px;
 }
 
 @media (max-width: 767px) {
+  .confirm {
+    gap: 14px;
+  }
+
+  .confirm .page-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .confirm .page-card {
+    padding: 16px;
+  }
+
+  .confirm__form :deep(.el-form-item__label) {
+    width: 76px !important;
+  }
+
   .confirm__bar {
     flex-direction: column;
     align-items: stretch;
+    padding: 14px 16px;
+    bottom: 8px;
   }
 
   .confirm__actions {
@@ -360,6 +416,7 @@ onMounted(() => {
 
   .confirm__hint {
     text-align: left;
+    margin-top: -4px;
   }
 }
 </style>

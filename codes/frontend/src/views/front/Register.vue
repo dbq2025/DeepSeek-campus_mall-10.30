@@ -97,59 +97,110 @@ async function onSubmit() {
 
 <style scoped>
 .auth {
+  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--mall-space-3);
-  background: linear-gradient(135deg, #e8f3ff 0%, #f5f7fa 60%, #eef7ee 100%);
+  padding: 32px 24px;
+  background: radial-gradient(900px 480px at 12% -8%, rgba(79, 70, 229, 0.16), transparent 70%),
+    radial-gradient(700px 420px at 92% 108%, rgba(34, 184, 207, 0.12), transparent 70%),
+    var(--mall-bg);
+}
+
+.auth::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 72%);
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 72%);
 }
 
 .auth__card {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   background: var(--mall-bg-white);
-  border-radius: 12px;
-  box-shadow: var(--mall-shadow-card);
-  padding: 32px 28px;
+  border: 1px solid var(--mall-border-light);
+  border-radius: var(--mall-radius-xl);
+  box-shadow: var(--mall-shadow-pop);
+  padding: 40px 36px;
 }
 
 .auth__title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .auth__subtitle {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 13px;
   color: var(--mall-text-3);
 }
 
 .auth__link {
   color: var(--mall-primary);
+  font-weight: 500;
+}
+
+.auth__link:hover {
+  color: var(--mall-primary-hover);
 }
 
 .auth__card form {
-  margin-top: 20px;
+  margin-top: 24px;
+}
+
+.auth__card :deep(.el-form-item) {
+  margin-bottom: 18px;
+}
+
+.auth__card :deep(.el-form-item__label) {
+  padding-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mall-text-2);
+}
+
+.auth__card :deep(.el-input__wrapper) {
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
 }
 
 .auth__submit {
   width: 100%;
+  height: 44px;
+  margin-top: 6px;
+  border-radius: 10px;
+  font-size: 15px;
 }
 
 .auth__tips {
-  margin-top: 16px;
+  margin-top: 18px;
   font-size: 12px;
   line-height: 1.7;
+  color: var(--mall-text-3);
 }
 
 @media (max-width: 767px) {
   .auth {
-    padding: 12px;
+    padding: 16px;
   }
 
   .auth__card {
-    padding: 24px 18px;
+    padding: 28px 20px;
+    border-radius: var(--mall-radius-lg);
+  }
+
+  .auth__title {
+    font-size: 20px;
   }
 }
 </style>

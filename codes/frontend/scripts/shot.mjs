@@ -134,23 +134,23 @@ try {
     mobile: width < 600
   })
 
-  const loaded = client.once('Page.loadEventFired')
-  await client.send('Page.navigate', { url })
-  await loaded
-  await sleep(waitMs)
-
-  // 需要登录态时：在当前 origin 写入 localStorage，再重新导航
+  // 需要登录态时：先在**同源页**写入 localStorage，再导航到目标页。
+  // 若先打开目标页再写 token，路由守卫会在首次加载时就把未登录用户重定向走。
   if (args.token) {
+    const warm = client.once('Page.loadEventFired')
+    await client.send('Page.navigate', { url: new URL(url).origin })
+    await warm
     await client.send('Runtime.evaluate', {
       expression: `localStorage.setItem('mall_token', ${JSON.stringify(args.token)});${
         args.user ? `localStorage.setItem('mall_user', ${JSON.stringify(args.user)});` : ''
       }`
     })
-    const reloaded = client.once('Page.loadEventFired')
-    await client.send('Page.reload', { ignoreCache: false })
-    await reloaded
-    await sleep(waitMs)
   }
+
+  const loaded = client.once('Page.loadEventFired')
+  await client.send('Page.navigate', { url })
+  await loaded
+  await sleep(waitMs)
 
   const metrics = await client.send('Runtime.evaluate', {
     expression: `(() => {

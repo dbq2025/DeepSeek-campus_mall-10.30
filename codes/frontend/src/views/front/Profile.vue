@@ -82,18 +82,28 @@ onMounted(() => {
 .profile {
   display: flex;
   flex-direction: column;
-  gap: var(--mall-space-2);
+  gap: 20px;
+}
+
+.profile .page-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 14px;
 }
 
 .profile__head {
   display: flex;
   align-items: center;
-  gap: var(--mall-space-2);
+  gap: 18px;
+  padding: 24px 28px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
 }
 
 .profile__avatar {
-  background: var(--mall-primary);
-  font-size: 24px;
+  background: var(--mall-primary-gradient);
+  font-size: 26px;
+  font-weight: 600;
+  box-shadow: 0 0 0 4px #fff, var(--mall-shadow-card);
 }
 
 .profile__meta {
@@ -102,43 +112,93 @@ onMounted(() => {
 }
 
 .profile__name {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.profile__meta .text-sub {
+  margin-top: 4px;
+}
+
+.profile :deep(.el-descriptions__body) {
+  border-radius: var(--mall-radius);
+  overflow: hidden;
+}
+
+.profile :deep(.el-descriptions__label) {
+  width: 110px;
+  background: var(--mall-bg-subtle);
+  color: var(--mall-text-3);
+  font-weight: 500;
+}
+
+.profile :deep(.el-descriptions__cell) {
+  padding: 12px 16px;
 }
 
 .profile__shortcuts {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: var(--mall-space-2);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .shortcut {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 18px 8px;
-  border: 1px solid var(--mall-border-light);
-  border-radius: var(--mall-radius);
-  background: var(--mall-bg-white);
+  gap: 10px;
+  padding: 22px 12px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: var(--mall-bg-subtle);
   color: var(--mall-text-2);
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
   font-size: 14px;
+  transition: transform var(--mall-dur) var(--mall-ease), box-shadow var(--mall-dur) var(--mall-ease),
+    border-color var(--mall-dur-fast) ease-out, color var(--mall-dur-fast) ease-out,
+    background-color var(--mall-dur-fast) ease-out;
+}
+
+.shortcut :deep(.el-icon) {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--mall-primary);
+  box-shadow: var(--mall-shadow-xs);
 }
 
 .shortcut:hover {
-  border-color: var(--mall-primary);
+  transform: translateY(-2px);
+  background: #fff;
+  border-color: rgba(79, 70, 229, 0.2);
+  box-shadow: var(--mall-shadow-card);
   color: var(--mall-primary);
 }
 
+@media (max-width: 1023px) {
+  .profile__shortcuts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 767px) {
+  .profile {
+    gap: 14px;
+  }
+
   .profile__head {
     flex-wrap: wrap;
+    padding: 20px;
   }
 
   .profile__logout {
     width: 100%;
+  }
+
+  .profile__name {
+    font-size: 20px;
   }
 }
 </style>

@@ -261,28 +261,41 @@ onMounted(load)
 .detail {
   display: flex;
   flex-direction: column;
-  gap: var(--mall-space-2);
+  gap: 20px;
 }
 
 .detail__crumb {
   padding: 0 4px;
+  font-size: 13px;
+}
+
+.detail__crumb :deep(.el-breadcrumb__inner) {
+  color: var(--mall-text-3);
+  font-weight: 400;
+}
+
+.detail__crumb :deep(.el-breadcrumb__item:last-child .el-breadcrumb__inner) {
+  color: var(--mall-text-1);
 }
 
 .detail__main {
-  display: flex;
-  gap: var(--mall-space-3);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 40px;
+  padding: 32px;
+  align-items: start;
 }
 
 .detail__gallery {
-  flex: 0 0 380px;
+  min-width: 0;
 }
 
 .detail__image {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: var(--mall-radius);
+  border-radius: var(--mall-radius-xl);
   overflow: hidden;
-  background: var(--mall-bg);
+  background: var(--mall-bg-subtle);
 }
 
 .detail__fallback {
@@ -295,33 +308,39 @@ onMounted(load)
 }
 
 .detail__info {
-  flex: 1;
   min-width: 0;
+  position: sticky;
+  top: 84px;
+  align-self: start;
 }
 
 .detail__name {
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1.4;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
 .detail__subtitle {
-  margin-top: 6px;
+  margin-top: 8px;
   color: var(--mall-text-3);
+  font-size: 14px;
 }
 
 .detail__price-box {
-  margin-top: 16px;
-  background: #fff7f7;
-  border-radius: var(--mall-radius);
-  padding: 12px 16px;
+  margin-top: 20px;
+  background: linear-gradient(135deg, #fff6f7 0%, #fffaf3 100%);
+  border: 1px solid rgba(245, 69, 92, 0.12);
+  border-radius: var(--mall-radius-lg);
+  padding: 16px 20px;
   display: flex;
   align-items: baseline;
   gap: 16px;
 }
 
 .detail__price {
-  font-size: 28px;
+  font-size: 32px;
+  line-height: 1.1;
 }
 
 .detail__row {
@@ -355,10 +374,22 @@ onMounted(load)
 }
 
 .detail__actions {
-  margin-top: var(--mall-space-3);
+  margin-top: 28px;
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.detail__actions :deep(.el-button) {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.detail__actions :deep(.el-button--primary) {
+  flex: 1 1 auto;
+  box-shadow: var(--mall-shadow-brand);
 }
 
 .detail__fav-icon {
@@ -366,10 +397,12 @@ onMounted(load)
 }
 
 .detail__tips {
-  margin-top: var(--mall-space-2);
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--mall-border-light);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   color: var(--mall-text-3);
   font-size: 13px;
 }
@@ -380,15 +413,20 @@ onMounted(load)
   gap: 6px;
 }
 
+.detail__desc {
+  padding: 28px 32px;
+}
+
 .detail__desc-title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .detail__desc-body {
   white-space: pre-line;
   color: var(--mall-text-2);
+  font-size: 14px;
   line-height: 1.9;
 }
 
@@ -426,34 +464,72 @@ onMounted(load)
   width: 40%;
 }
 
+@media (max-width: 1100px) {
+  .detail__main {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 28px;
+    padding: 24px;
+  }
+}
+
 @media (max-width: 991px) {
   .detail__main {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
-  .detail__gallery,
-  .skeleton-block--image {
-    flex: none;
-    width: 100%;
-    max-width: 420px;
+  .detail__info {
+    position: static;
+  }
+
+  .detail__image {
+    max-width: 520px;
+    margin: 0 auto;
   }
 
   .detail__skeleton {
     flex-direction: column;
   }
+
+  .skeleton-block--image {
+    flex: none;
+    width: 100%;
+    max-width: 420px;
+  }
 }
 
 @media (max-width: 767px) {
+  .detail {
+    gap: 14px;
+  }
+
+  .detail__main {
+    padding: 16px;
+    gap: 18px;
+    border-radius: var(--mall-radius);
+  }
+
   .detail__name {
     font-size: 18px;
   }
 
   .detail__price {
-    font-size: 24px;
+    font-size: 26px;
+  }
+
+  .detail__price-box {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .detail__desc {
+    padding: 20px 16px;
   }
 
   .detail__actions :deep(.el-button) {
     flex: 1 1 calc(50% - 6px);
+    padding: 0 12px;
+    font-size: 14px;
   }
 }
 </style>
