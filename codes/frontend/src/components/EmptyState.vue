@@ -1,9 +1,11 @@
 <template>
   <div class="empty-state">
-    <el-icon :size="42" :class="['empty-state__icon', { 'is-error': type === 'error' }]">
-      <WarningFilled v-if="type === 'error'" />
-      <Box v-else />
-    </el-icon>
+    <span class="empty-state__badge" :class="{ 'is-error': type === 'error' }">
+      <el-icon :size="34">
+        <WarningFilled v-if="type === 'error'" />
+        <Box v-else />
+      </el-icon>
+    </span>
     <p class="empty-state__title">{{ title || (type === 'error' ? '加载失败' : '暂无数据') }}</p>
     <p v-if="desc" class="empty-state__desc">{{ desc }}</p>
     <div class="empty-state__actions">
@@ -36,35 +38,49 @@ defineEmits(['retry', 'action'])
 
 <style scoped>
 .empty-state {
-  padding: 48px 16px;
+  padding: 56px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-.empty-state__icon {
-  color: var(--mall-text-4);
+.empty-state__badge {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mall-primary);
+  background: radial-gradient(circle at 32% 28%, #ffffff 0%, var(--mall-primary-soft) 62%, #e3e6ff 100%);
+  box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.12), var(--mall-shadow-xs);
 }
 
-.empty-state__icon.is-error {
+.empty-state__badge.is-error {
   color: var(--mall-danger);
+  background: radial-gradient(circle at 32% 28%, #ffffff 0%, var(--mall-danger-soft) 62%, #fbdad7 100%);
+  box-shadow: inset 0 0 0 1px rgba(240, 68, 56, 0.14), var(--mall-shadow-xs);
 }
 
 .empty-state__title {
-  margin-top: 12px;
+  margin-top: 18px;
   font-size: 15px;
-  color: var(--mall-text-2);
+  font-weight: 600;
+  color: var(--mall-text-1);
 }
 
 .empty-state__desc {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 13px;
   color: var(--mall-text-3);
   max-width: 420px;
+  line-height: 1.6;
 }
 
 .empty-state__actions {
-  margin-top: 16px;
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
 }
 </style>

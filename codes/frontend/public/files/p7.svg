@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480">
   <defs>
     <linearGradient id="p7bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#F5F8FD"/>
-      <stop offset="1" stop-color="#E5ECF8"/>
+      <stop offset="0" stop-color="#F4F8FD"/>
+      <stop offset="1" stop-color="#DFE8F7"/>
     </linearGradient>
     <clipPath id="p7clip">
-      <circle cx="212" cy="228" r="112"/>
+      <circle cx="210" cy="226" r="114"/>
     </clipPath>
   </defs>
   <rect width="480" height="480" fill="url(#p7bg)"/>
-  <circle cx="212" cy="228" r="112" fill="#64748B" fill-opacity="0.07" stroke="#64748B" stroke-opacity="0.26" stroke-width="2"/>
-  <circle cx="292" cy="264" r="92" fill="#4F46E5" fill-opacity="0.06" stroke="#4F46E5" stroke-opacity="0.24" stroke-width="2"/>
-  <g clip-path="url(#p7clip)" stroke="#64748B" stroke-opacity="0.14" stroke-width="2">
-    <path d="M60 160 L372 160"/>
-    <path d="M60 200 L372 200"/>
-    <path d="M60 240 L372 240"/>
-    <path d="M60 280 L372 280"/>
+  <circle cx="210" cy="226" r="114" fill="#64748B" fill-opacity="0.1" stroke="#64748B" stroke-opacity="0.42" stroke-width="2.4"/>
+  <circle cx="294" cy="266" r="94" fill="#4F46E5" fill-opacity="0.1" stroke="#4F46E5" stroke-opacity="0.42" stroke-width="2.4"/>
+  <g clip-path="url(#p7clip)" stroke="#64748B" stroke-opacity="0.26" stroke-width="2">
+    <path d="M56 156 L372 156"/>
+    <path d="M56 200 L372 200"/>
+    <path d="M56 244 L372 244"/>
+    <path d="M56 288 L372 288"/>
   </g>
-  <path d="M120 372 L360 108" stroke="#64748B" stroke-opacity="0.12" stroke-width="2"/>
-  <circle cx="352" cy="140" r="6" fill="#4F46E5" fill-opacity="0.35"/>
+  <path d="M116 374 L364 104" stroke="#64748B" stroke-opacity="0.18" stroke-width="2"/>
+  <circle cx="356" cy="138" r="7" fill="#4F46E5" fill-opacity="0.5"/>
 </svg>
