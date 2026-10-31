@@ -1,0 +1,202 @@
+/**
+ * Element Plus 主题桥。
+ *
+ * 为什么需要这一层：EP 的颜色家族是构建时写死在 CSS 里的静态变量，
+ * 只改 --el-color-primary 时，hover / plain / disabled 仍会回落到出厂蓝。
+ * 因此必须把 primary 的 light-3/5/7/8/9 与 dark-2 一起覆盖。
+ *
+ * 引入顺序（见 main.js）：EP 官方 css → variables.css → 本文件 → base.css。
+ */
+:root {
+  /* ── 主色家族（与 --mall-primary #4f46e5 同源） ── */
+  --el-color-primary: #4f46e5;
+  --el-color-primary-light-3: #847ded;
+  --el-color-primary-light-5: #a7a2f2;
+  --el-color-primary-light-7: #cac7f7;
+  --el-color-primary-light-8: #dcdafa;
+  --el-color-primary-light-9: #edecfc;
+  --el-color-primary-dark-2: #3f38b7;
+
+  /* ── 语义色家族 ── */
+  --el-color-success: #12b76a;
+  --el-color-success-light-3: #59cd97;
+  --el-color-success-light-5: #88dbb4;
+  --el-color-success-light-7: #b8e9d2;
+  --el-color-success-light-8: #d0f1e1;
+  --el-color-success-light-9: #e7f8f0;
+  --el-color-success-dark-2: #0e9255;
+
+  --el-color-warning: #f79009;
+  --el-color-warning-light-3: #f9b153;
+  --el-color-warning-light-5: #fbc884;
+  --el-color-warning-light-7: #fddeb5;
+  --el-color-warning-light-8: #fde9ce;
+  --el-color-warning-light-9: #fef4e6;
+  --el-color-warning-dark-2: #c67307;
+
+  --el-color-danger: #f04438;
+  --el-color-danger-light-3: #f57c74;
+  --el-color-danger-light-5: #f8a29c;
+  --el-color-danger-light-7: #fbc7c3;
+  --el-color-danger-light-8: #fcd7d4;
+  --el-color-danger-light-9: #fdeceb;
+  --el-color-danger-dark-2: #c0362d;
+
+  --el-color-error: #f04438;
+  --el-color-error-light-3: #f57c74;
+  --el-color-error-light-5: #f8a29c;
+  --el-color-error-light-7: #fbc7c3;
+  --el-color-error-light-8: #fcd7d4;
+  --el-color-error-light-9: #fdeceb;
+  --el-color-error-dark-2: #c0362d;
+
+  --el-color-info: #64748b;
+  --el-color-info-light-3: #939eae;
+  --el-color-info-light-5: #b2bac5;
+  --el-color-info-light-7: #d1d5dc;
+  --el-color-info-light-8: #e0e4e8;
+  --el-color-info-light-9: #eff1f3;
+  --el-color-info-dark-2: #505d6f;
+
+  /* ── 文字 ── */
+  --el-text-color-primary: #0f172a;
+  --el-text-color-regular: #475569;
+  --el-text-color-secondary: #64748b;
+  --el-text-color-placeholder: #94a3b8;
+  --el-text-color-disabled: #cbd5e1;
+
+  /* ── 边框 ── */
+  --el-border-color: #e2e8f0;
+  --el-border-color-light: #eef2f7;
+  --el-border-color-lighter: #f1f5f9;
+  --el-border-color-extra-light: #f8fafc;
+  --el-border-color-dark: #cbd5e1;
+  --el-border-color-darker: #94a3b8;
+
+  /* ── 填充与背景 ── */
+  --el-fill-color: #f1f5f9;
+  --el-fill-color-light: #f8fafc;
+  --el-fill-color-lighter: #fbfcfe;
+  --el-fill-color-extra-light: #fdfefe;
+  --el-fill-color-dark: #e2e8f0;
+  --el-fill-color-darker: #cbd5e1;
+  --el-fill-color-blank: #ffffff;
+
+  --el-bg-color: #ffffff;
+  --el-bg-color-page: #f6f7fb;
+  --el-bg-color-overlay: #ffffff;
+
+  /* ── 圆角与字体 ── */
+  --el-border-radius-base: 10px;
+  --el-border-radius-small: 8px;
+  --el-border-radius-round: 999px;
+  --el-font-family: var(--mall-font-sans);
+  --el-font-size-base: 14px;
+  --el-font-weight-primary: 500;
+
+  /* ── 阴影 ── */
+  --el-box-shadow: 0 12px 32px 4px rgba(15, 23, 42, 0.06), 0 8px 20px rgba(15, 23, 42, 0.04);
+  --el-box-shadow-light: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -16px rgba(15, 23, 42, 0.18);
+  --el-box-shadow-lighter: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --el-box-shadow-dark: 0 24px 48px -24px rgba(15, 23, 42, 0.28);
+
+  /* ── 表格（EP 2.7 有一整套表格级变量，改这里即可全局生效） ── */
+  --el-table-header-bg-color: #f8fafc;
+  --el-table-header-text-color: #64748b;
+  --el-table-text-color: #475569;
+  --el-table-border-color: #f1f5f9;
+  --el-table-row-hover-bg-color: #fafbff;
+  --el-table-bg-color: #ffffff;
+  --el-table-tr-bg-color: #ffffff;
+
+  /* ── 标签 ── */
+  --el-tag-border-radius: 6px;
+}
+
+/* ── 组件级微调：只做「统一规格」，不改变任何交互语义 ── */
+.el-button {
+  font-weight: 500;
+  transition: background-color var(--mall-dur-fast) ease-out,
+    border-color var(--mall-dur-fast) ease-out, color var(--mall-dur-fast) ease-out,
+    box-shadow var(--mall-dur) var(--mall-ease), transform 80ms ease-out;
+}
+
+.el-button--primary:not(.is-plain):not(.is-text):not(.is-link) {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.el-button--primary:not(.is-plain):not(.is-text):not(.is-link):hover {
+  box-shadow: var(--mall-shadow-brand);
+}
+
+.el-button:not(.is-link):not(.is-text):active {
+  transform: translateY(1px);
+}
+
+.el-button:focus-visible,
+.el-button.is-link:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 3px var(--mall-primary-ring);
+}
+
+.el-tag {
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.el-table th.el-table__cell {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.el-table .el-table__cell {
+  padding: 12px 0;
+}
+
+.el-dialog {
+  border-radius: var(--mall-radius-lg);
+  box-shadow: var(--mall-shadow-pop);
+}
+
+.el-dialog__header {
+  padding-bottom: 16px;
+  margin-right: 0;
+}
+
+.el-dialog__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--mall-text-1);
+}
+
+.el-overlay {
+  backdrop-filter: blur(2px);
+  background-color: rgba(15, 23, 42, 0.32);
+}
+
+.el-pagination.is-background .el-pager li {
+  border-radius: 8px;
+}
+
+.el-input__wrapper,
+.el-select__wrapper,
+.el-textarea__inner {
+  box-shadow: 0 0 0 1px var(--mall-border) inset;
+}
+
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 1px var(--mall-primary) inset, 0 0 0 3px var(--mall-primary-ring);
+}
+
+.el-dropdown-menu__item {
+  border-radius: 6px;
+  margin: 2px 6px;
+  padding: 7px 10px;
+}
+
+.el-message {
+  border-radius: 10px;
+  box-shadow: var(--mall-shadow-pop);
+}

@@ -1,46 +1,85 @@
 /**
- * 设计令牌。所有颜色/间距/圆角只从这里取，组件内禁止写死色值。
- * 主色沿用 Element Plus 默认 #409eff，不做自定义主题（不引 sass）。
+ * 设计令牌 v2（阶段 4.5 视觉改版）
+ *
+ * 规则：组件只从这里取值，禁止在页面里写死色值 / 圆角 / 阴影。
+ * 兼容：旧变量名全部保留（只更新取值），老组件不改名也能立即生效。
  */
 :root {
-  /* 主色与语义色 */
-  --mall-primary: #409eff;
-  --mall-primary-light: #ecf5ff;
-  --mall-success: #67c23a;
-  --mall-warning: #e6a23c;
-  --mall-danger: #f56c6c;
-  --mall-info: #909399;
-  --mall-price: #f56c6c;
+  /* ── 品牌色（单一强调色） ── */
+  --mall-primary: #4f46e5;
+  --mall-primary-hover: #4338ca;
+  --mall-primary-active: #3730a3;
+  --mall-primary-soft: #eef0ff;
+  --mall-primary-light: #eef0ff; /* 兼容旧命名，勿在新代码使用 */
+  --mall-primary-ring: rgba(79, 70, 229, 0.18);
+  --mall-primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
 
-  /* 文字 */
-  --mall-text-1: #303133;
-  --mall-text-2: #606266;
-  --mall-text-3: #909399;
-  --mall-text-4: #c0c4cc;
+  /* ── 语义色 ── */
+  --mall-success: #12b76a;
+  --mall-success-soft: #e7f8f0;
+  --mall-warning: #f79009;
+  --mall-warning-soft: #fef4e6;
+  --mall-danger: #f04438;
+  --mall-danger-soft: #fdeceb;
+  --mall-info: #64748b;
+  --mall-info-soft: #eff1f3;
+  --mall-price: #f5455c;
+  --mall-price-soft: #fff1f3;
 
-  /* 边框与背景 */
-  --mall-border: #dcdfe6;
-  --mall-border-light: #ebeef5;
-  --mall-bg: #f5f7fa;
+  /* ── 文字（slate 灰阶） ── */
+  --mall-text-1: #0f172a;
+  --mall-text-2: #475569;
+  --mall-text-3: #64748b;
+  --mall-text-4: #94a3b8;
+
+  /* ── 边框与表面 ── */
+  --mall-border: #e2e8f0;
+  --mall-border-light: #eef2f7;
+  --mall-border-strong: #cbd5e1;
+  --mall-bg: #f6f7fb;
   --mall-bg-white: #ffffff;
+  --mall-bg-subtle: #f8fafc;
+  --mall-bg-hover: #fafbff;
 
-  /* 圆角 */
-  --mall-radius: 8px;
-  --mall-radius-sm: 4px;
+  /* ── 圆角 ── */
+  --mall-radius-xs: 6px;
+  --mall-radius-sm: 8px;
+  --mall-radius: 12px;
+  --mall-radius-lg: 16px;
+  --mall-radius-xl: 20px;
+  --mall-radius-pill: 999px;
 
-  /* 间距 */
+  /* ── 间距（4 基数） ── */
+  --mall-space-0: 4px;
   --mall-space-1: 8px;
   --mall-space-2: 16px;
   --mall-space-3: 24px;
+  --mall-space-4: 32px;
+  --mall-space-5: 40px;
+  --mall-space-6: 48px;
+  --mall-space-7: 64px;
 
-  /* 尺寸 */
+  /* ── 尺寸 ── */
   --mall-container: 1200px;
   --mall-header-h: 64px;
-  --mall-admin-sider: 220px;
+  --mall-admin-sider: 232px;
   --mall-admin-sider-collapsed: 64px;
-  --mall-admin-header-h: 56px;
+  --mall-admin-header-h: 60px;
 
-  /* 阴影 */
-  --mall-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
-  --mall-shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.1);
+  /* ── 阴影（双层：近距细影 + 远距扩散影） ── */
+  --mall-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --mall-shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -16px rgba(15, 23, 42, 0.18);
+  --mall-shadow-hover: 0 2px 4px rgba(15, 23, 42, 0.04), 0 16px 32px -16px rgba(15, 23, 42, 0.22);
+  --mall-shadow-pop: 0 24px 48px -24px rgba(15, 23, 42, 0.28);
+  --mall-shadow-brand: 0 8px 20px -8px rgba(79, 70, 229, 0.5);
+
+  /* ── 动效 ── */
+  --mall-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --mall-dur-fast: 140ms;
+  --mall-dur: 220ms;
+  --mall-dur-slow: 320ms;
+
+  /* ── 字体 ── */
+  --mall-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
 }

@@ -1,5 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480">
-  <rect width="480" height="480" fill="#f56c6c" opacity="0.12"/>
-  <rect x="60" y="60" width="360" height="360" rx="24" fill="none" stroke="#f56c6c" stroke-width="4" opacity="0.5"/>
-  <text x="240" y="250" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="56" fill="#f56c6c" text-anchor="middle" opacity="0.85">商品图 4</text>
+  <defs>
+    <linearGradient id="p4bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F1FBF7"/>
+      <stop offset="1" stop-color="#E0F3EC"/>
+    </linearGradient>
+    <linearGradient id="p4fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#12A594" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#12A594" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="480" fill="url(#p4bg)"/>
+  <path d="M0 300 Q120 236 240 300 T480 300 L480 480 L0 480 Z" fill="url(#p4fill)"/>
+  <g fill="none" stroke="#12A594" stroke-opacity="0.26" stroke-width="2">
+    <path d="M0 268 Q120 204 240 268 T480 268"/>
+    <path d="M0 312 Q120 248 240 312 T480 312"/>
+    <path d="M0 356 Q120 292 240 356 T480 356"/>
+  </g>
+  <circle cx="330" cy="170" r="58" fill="none" stroke="#12A594" stroke-opacity="0.22" stroke-width="2"/>
+  <circle cx="330" cy="170" r="16" fill="#12A594" fill-opacity="0.14"/>
 </svg>

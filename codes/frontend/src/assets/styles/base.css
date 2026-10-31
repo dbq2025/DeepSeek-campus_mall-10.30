@@ -1,4 +1,4 @@
-/* 基础样式与少量工具类。除 reset 外不写组件级样式。 */
+/* 基础样式与工具类。除 reset 与排版基线外，不写具体页面样式。 */
 * {
   box-sizing: border-box;
 }
@@ -12,22 +12,13 @@ body,
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  font-family: var(--mall-font-sans);
   font-size: 14px;
-  line-height: 1.6;
-  color: var(--mall-text-1);
+  line-height: 1.57;
+  color: var(--mall-text-2);
   background: var(--mall-bg);
   -webkit-font-smoothing: antialiased;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img {
-  max-width: 100%;
-  display: block;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -38,43 +29,82 @@ p {
   margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  color: var(--mall-text-1);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--mall-dur-fast) ease-out;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
 ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+::selection {
+  background: var(--mall-primary-soft);
+  color: var(--mall-primary-active);
+}
+
+/* 键盘可见焦点：鼠标点击不出现，Tab 导航必现 */
+a:focus-visible,
+button:not(.el-button):focus-visible,
+[tabindex]:not(.el-input__wrapper):focus-visible {
+  outline: 2px solid transparent;
+  border-radius: 6px;
+  box-shadow: 0 0 0 3px var(--mall-primary-ring);
+}
+
 /* 滚动条 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c8ccd4;
-  border-radius: 4px;
+  background: #cfd6e4;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8adb8;
+  background: #aab4c6;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* 通用容器 */
+/* ── 布局容器 ── */
 .mall-container {
   width: 100%;
   max-width: var(--mall-container);
   margin: 0 auto;
-  padding: 0 var(--mall-space-2);
+  padding: 0 var(--mall-space-3);
 }
 
-/* 卡片 */
+/* ── 表面：画布之上的一层白卡 ── */
 .page-card {
   background: var(--mall-bg-white);
-  border-radius: var(--mall-radius);
+  border: 1px solid var(--mall-border-light);
+  border-radius: var(--mall-radius-lg);
+  box-shadow: var(--mall-shadow-card);
   padding: var(--mall-space-3);
 }
 
@@ -83,30 +113,50 @@ ul {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--mall-space-1);
+  gap: 12px;
   margin-bottom: var(--mall-space-2);
 }
 
 .toolbar__right {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* 价格 */
+/* ── 价格：电商惯例，红色 + 等宽数字 + 缩小的货币符 ── */
 .price {
   color: var(--mall-price);
-  font-weight: 600;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
 .price::before {
   content: '¥';
-  font-size: 0.85em;
+  font-size: 0.75em;
+  font-weight: 600;
   margin-right: 1px;
 }
 
-/* 次要文字 */
+/* 表格里的金额不需要放大货币符 */
+.price--sm::before {
+  font-size: 0.85em;
+}
+
+/* 所有需要对齐的数字 */
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 文字工具类 ── */
 .text-sub {
   color: var(--mall-text-3);
   font-size: 13px;
+}
+
+.text-danger {
+  color: var(--mall-danger);
 }
 
 .text-ellipsis {
@@ -117,14 +167,16 @@ ul {
 
 /* 页面标题 */
 .page-title {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--mall-text-1);
   margin-bottom: var(--mall-space-2);
 }
 
-/* 骨架块 */
+/* ── 骨架块 ── */
 .skeleton-block {
-  background: linear-gradient(90deg, #f2f3f5 25%, #e8eaed 37%, #f2f3f5 63%);
+  background: linear-gradient(90deg, #f1f4f9 25%, #e6ebf3 37%, #f1f4f9 63%);
   background-size: 400% 100%;
   animation: skeleton-loading 1.4s ease infinite;
   border-radius: var(--mall-radius-sm);
@@ -145,6 +197,17 @@ ul {
   overflow-x: auto;
 }
 
+/* 主色文字链接 */
+.link-primary {
+  color: var(--mall-primary);
+  font-weight: 500;
+  transition: color var(--mall-dur-fast) ease-out;
+}
+
+.link-primary:hover {
+  color: var(--mall-primary-hover);
+}
+
 @media (max-width: 767px) {
   .mall-container {
     padding: 0 12px;
@@ -152,10 +215,36 @@ ul {
 
   .page-card {
     padding: var(--mall-space-2);
+    border-radius: var(--mall-radius);
+  }
+
+  .page-title {
+    font-size: 20px;
   }
 
   .toolbar > .el-input,
   .toolbar > .el-select {
     width: 100% !important;
+  }
+
+  .toolbar__right {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+/* 尊重系统「减少动态效果」偏好：只保留透明度变化 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .skeleton-block {
+    animation: none;
   }
 }
