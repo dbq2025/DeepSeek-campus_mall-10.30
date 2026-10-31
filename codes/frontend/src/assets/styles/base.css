@@ -1,0 +1,161 @@
+/* 基础样式与少量工具类。除 reset 外不写组件级样式。 */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--mall-text-1);
+  background: var(--mall-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8ccd4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8adb8;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 通用容器 */
+.mall-container {
+  width: 100%;
+  max-width: var(--mall-container);
+  margin: 0 auto;
+  padding: 0 var(--mall-space-2);
+}
+
+/* 卡片 */
+.page-card {
+  background: var(--mall-bg-white);
+  border-radius: var(--mall-radius);
+  padding: var(--mall-space-3);
+}
+
+/* 工具条：筛选条件 + 操作按钮 */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mall-space-1);
+  margin-bottom: var(--mall-space-2);
+}
+
+.toolbar__right {
+  margin-left: auto;
+}
+
+/* 价格 */
+.price {
+  color: var(--mall-price);
+  font-weight: 600;
+}
+
+.price::before {
+  content: '¥';
+  font-size: 0.85em;
+  margin-right: 1px;
+}
+
+/* 次要文字 */
+.text-sub {
+  color: var(--mall-text-3);
+  font-size: 13px;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 页面标题 */
+.page-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: var(--mall-space-2);
+}
+
+/* 骨架块 */
+.skeleton-block {
+  background: linear-gradient(90deg, #f2f3f5 25%, #e8eaed 37%, #f2f3f5 63%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+  border-radius: var(--mall-radius-sm);
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+/* 表格在窄屏允许横向滚动，不隐藏列 */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 767px) {
+  .mall-container {
+    padding: 0 12px;
+  }
+
+  .page-card {
+    padding: var(--mall-space-2);
+  }
+
+  .toolbar > .el-input,
+  .toolbar > .el-select {
+    width: 100% !important;
+  }
+}

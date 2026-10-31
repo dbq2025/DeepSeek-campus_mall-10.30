@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480">
+  <rect width="480" height="480" fill="#909399" opacity="0.12"/>
+  <rect x="60" y="60" width="360" height="360" rx="24" fill="none" stroke="#909399" stroke-width="4" opacity="0.5"/>
+  <text x="240" y="250" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="56" fill="#909399" text-anchor="middle" opacity="0.85">商品图 5</text>
+</svg>

@@ -1,0 +1,55 @@
+<template>
+  <div class="base-pager">
+    <el-pagination
+      :current-page="page"
+      :page-size="size"
+      :total="total"
+      :page-sizes="pageSizes"
+      :layout="layout"
+      :background="background"
+      :small="small"
+      @update:current-page="onPageChange"
+      @update:page-size="onSizeChange"
+    />
+  </div>
+</template>
+
+<script setup>
+const props = defineProps({
+  page: { type: Number, default: 1 },
+  size: { type: Number, default: 10 },
+  total: { type: Number, default: 0 },
+  pageSizes: { type: Array, default: () => [10, 20, 50] },
+  layout: { type: String, default: 'total, sizes, prev, pager, next, jumper' },
+  background: { type: Boolean, default: true },
+  small: { type: Boolean, default: false }
+})
+
+const emit = defineEmits(['update:page', 'update:size', 'change'])
+
+function onPageChange(page) {
+  emit('update:page', page)
+  emit('change', { page, size: props.size })
+}
+
+function onSizeChange(size) {
+  emit('update:size', size)
+  emit('update:page', 1)
+  emit('change', { page: 1, size })
+}
+</script>
+
+<style scoped>
+.base-pager {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--mall-space-2);
+  overflow-x: auto;
+}
+
+@media (max-width: 767px) {
+  .base-pager {
+    justify-content: center;
+  }
+}
+</style>

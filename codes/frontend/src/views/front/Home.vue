@@ -1,158 +1,288 @@
 <template>
-  <div class="page">
-    <header class="hero">
-      <h1>校园电商平台</h1>
-      <p>前端脚手架已就绪 · 环境自检页（开发期用，后续可替换为真实首页）</p>
-    </header>
-
-    <el-card class="card" shadow="never">
-      <template #header>
-        <div class="card-head">
-          <span>后端连通性</span>
-          <el-button size="small" :loading="loading" @click="checkBackend">重新检测</el-button>
+  <div class="home">
+    <section class="hero">
+      <div class="mall-container hero__inner">
+        <div class="hero__text">
+          <h1 class="hero__title">校园商城 · 一站购齐</h1>
+          <p class="hero__desc">数码、文具、生活、运动，校内仓储当日出库</p>
+          <div class="hero__search">
+            <el-input
+              v-model="keyword"
+              size="large"
+              placeholder="搜索商品，如「机械键盘」"
+              clearable
+              @keyup.enter="onSearch"
+            >
+              <template #append>
+                <el-button type="primary" @click="onSearch">搜索</el-button>
+              </template>
+            </el-input>
+          </div>
         </div>
-      </template>
-      <el-descriptions :column="2" border size="small">
-        <el-descriptions-item label="接口地址">{{ apiBase }}/health</el-descriptions-item>
-        <el-descriptions-item label="状态">
-          <el-tag :type="health ? 'success' : 'danger'" size="small">
-            {{ health ? '已连通' : '未连通' }}
-          </el-tag>
-        </el-descriptions-item>
-        <el-descriptions-item label="数据库">{{ health?.dbProduct || '—' }}</el-descriptions-item>
-        <el-descriptions-item label="Schema">{{ health?.dbSchema || '—' }}</el-descriptions-item>
-        <el-descriptions-item label="缓存实现">{{ health?.cacheType || '—' }}</el-descriptions-item>
-        <el-descriptions-item label="缓存可用">
-          {{ health ? (health.cacheOk ? '是' : '否') : '—' }}
-        </el-descriptions-item>
-      </el-descriptions>
-      <el-alert
-        v-if="error"
-        class="mt"
+        <ul class="hero__points">
+          <li><el-icon><CircleCheck /></el-icon> 正品保障</li>
+          <li><el-icon><Van /></el-icon> 校内配送</li>
+          <li><el-icon><RefreshLeft /></el-icon> 7 天无理由</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="mall-container section">
+      <div class="category-bar">
+        <span class="category-bar__label">商品分类</span>
+        <div class="category-bar__list">
+          <el-button
+            v-for="item in categories"
+            :key="item.id"
+            :type="activeCategory === item.id ? 'primary' : 'default'"
+            plain
+            size="small"
+            round
+            @click="goCategory(item.id)"
+          >
+            {{ item.name }}
+          </el-button>
+          <el-button v-if="!categories.length" size="small" text disabled>暂无分类</el-button>
+        </div>
+      </div>
+    </section>
+
+    <section class="mall-container section">
+      <div class="section__head">
+        <h2 class="section__title">热销推荐</h2>
+        <router-link to="/products" class="section__more">
+          查看全部<el-icon><ArrowRight /></el-icon>
+        </router-link>
+      </div>
+
+      <div v-if="loading" class="product-grid">
+        <div v-for="n in 8" :key="n" class="skeleton-card">
+          <div class="skeleton-block skeleton-card__image"></div>
+          <div class="skeleton-block skeleton-card__line"></div>
+          <div class="skeleton-block skeleton-card__line skeleton-card__line--short"></div>
+        </div>
+      </div>
+
+      <EmptyState
+        v-else-if="error"
         type="error"
-        :title="error"
-        :closable="false"
-        show-icon
+        title="热销商品加载失败"
+        :desc="error"
+        @retry="load"
       />
-      <p class="hint">若显示未连通：确认后端已启动（8080）、MySQL 已运行、Vite 代理指向正确。</p>
-    </el-card>
 
-    <el-card class="card" shadow="never">
-      <template #header>
-        <div class="card-head">
-          <span>Mock 数据（{{ useMock ? '已开启' : '已关闭' }}）</span>
-          <el-button size="small" :loading="mockLoading" @click="loadMock">拉取示例商品</el-button>
-        </div>
-      </template>
-      <el-table v-loading="mockLoading" :data="products" size="small" border>
-        <el-table-column prop="name" label="商品名" min-width="150" />
-        <el-table-column prop="price" label="价格" width="100" />
-        <el-table-column prop="stock" label="库存" width="80" />
-        <el-table-column prop="subtitle" label="说明" min-width="180" />
-      </el-table>
-      <p class="hint">
-        Mock 由 <code>mock/index.js</code> 提供，开关在 <code>.env.development</code> 的
-        <code>VITE_USE_MOCK</code>。数据须与 <code>design/</code> 下的接口契约保持一致。
-      </p>
-    </el-card>
+      <EmptyState
+        v-else-if="!hotProducts.length"
+        title="还没有上架的商品"
+        desc="管理员在后台发布商品后会展示在这里"
+        action-text="刷新看看"
+        @action="load"
+      />
 
-    <div class="links">
-      <el-button type="primary" plain @click="$router.push('/admin/login')">后台登录（占位）</el-button>
-    </div>
+      <div v-else class="product-grid">
+        <ProductCard
+          v-for="product in hotProducts"
+          :key="product.id"
+          :product="product"
+          @add-cart="onAddCart"
+        />
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import request from '@/utils/request'
+import { useRouter } from 'vue-router'
+import { fetchCategories, fetchProducts } from '@/api/product'
+import ProductCard from '@/views/front/components/ProductCard.vue'
+import EmptyState from '@/components/EmptyState.vue'
+import { useAddToCart } from '@/composables/useAddToCart'
 
-const apiBase = import.meta.env.VITE_API_BASE || '/api'
-const useMock = import.meta.env.VITE_USE_MOCK === 'true'
+const router = useRouter()
+const { add } = useAddToCart()
 
-const loading = ref(false)
-const mockLoading = ref(false)
-const health = ref(null)
+const keyword = ref('')
+const categories = ref([])
+const hotProducts = ref([])
+const loading = ref(true)
 const error = ref('')
-const products = ref([])
+const activeCategory = ref('')
 
-async function checkBackend() {
+async function load() {
   loading.value = true
   error.value = ''
   try {
-    const res = await request.get('/health')
-    health.value = res.data
+    const [cats, page] = await Promise.all([
+      fetchCategories(),
+      fetchProducts({ page: 1, size: 8, sort: 'sales_desc' })
+    ])
+    categories.value = cats || []
+    hotProducts.value = page?.records || []
   } catch (e) {
-    health.value = null
-    error.value = e.message || '请求失败'
+    error.value = e.message || '加载失败'
+    hotProducts.value = []
   } finally {
     loading.value = false
   }
 }
 
-async function loadMock() {
-  mockLoading.value = true
-  try {
-    const res = await request.get('/front/products', { params: { page: 1, size: 10 } })
-    products.value = res.data?.records ?? []
-  } finally {
-    mockLoading.value = false
-  }
+function onSearch() {
+  const word = keyword.value.trim()
+  router.push({ path: '/products', query: word ? { keyword: word } : {} })
 }
 
-onMounted(checkBackend)
+function goCategory(id) {
+  router.push({ path: '/products', query: { categoryId: id } })
+}
+
+function onAddCart(product) {
+  add(product)
+}
+
+onMounted(load)
 </script>
 
 <style scoped>
-.page {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 32px 20px 56px;
+.hero {
+  background: linear-gradient(135deg, #e8f3ff 0%, #f5f7fa 55%, #eef7ee 100%);
+  border-bottom: 1px solid var(--mall-border-light);
 }
 
-.hero h1 {
-  margin: 0 0 6px;
-  font-size: 22px;
-  font-weight: 500;
+.hero__inner {
+  padding: 40px 16px;
+  display: flex;
+  align-items: center;
+  gap: var(--mall-space-3);
+  flex-wrap: wrap;
 }
 
-.hero p {
-  margin: 0 0 20px;
-  color: #909399;
+.hero__text {
+  flex: 1;
+  min-width: 260px;
+}
+
+.hero__title {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.hero__desc {
+  margin-top: 8px;
+  color: var(--mall-text-2);
+}
+
+.hero__search {
+  margin-top: 20px;
+  max-width: 460px;
+}
+
+.hero__points {
+  display: flex;
+  gap: var(--mall-space-3);
+  color: var(--mall-text-2);
   font-size: 13px;
 }
 
-.card {
-  margin-bottom: 16px;
-  border-radius: 10px;
+.hero__points li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.card-head {
+.section {
+  margin-top: var(--mall-space-3);
+}
+
+.category-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--mall-space-2);
+  background: var(--mall-bg-white);
+  border-radius: var(--mall-radius);
+  padding: 14px var(--mall-space-2);
+}
+
+.category-bar__label {
+  color: var(--mall-text-3);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.category-bar__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.section__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 14px;
-  font-weight: 500;
+  margin-bottom: var(--mall-space-2);
 }
 
-.mt {
-  margin-top: 12px;
+.section__title {
+  font-size: 18px;
+  font-weight: 600;
 }
 
-.hint {
-  margin: 12px 0 0;
-  color: #909399;
-  font-size: 12px;
-  line-height: 1.7;
+.section__more {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--mall-text-3);
+  font-size: 13px;
 }
 
-code {
-  background: #f2f3f5;
-  border-radius: 3px;
-  padding: 1px 4px;
-  font-size: 12px;
+.section__more:hover {
+  color: var(--mall-primary);
 }
 
-.links {
-  margin-top: 8px;
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--mall-space-2);
+}
+
+.skeleton-card {
+  background: var(--mall-bg-white);
+  border-radius: var(--mall-radius);
+  padding: 12px;
+}
+
+.skeleton-card__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 12px;
+}
+
+.skeleton-card__line {
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.skeleton-card__line--short {
+  width: 60%;
+}
+
+@media (max-width: 767px) {
+  .hero__inner {
+    padding: 24px 12px;
+  }
+
+  .hero__title {
+    font-size: 22px;
+  }
+
+  .hero__points {
+    gap: var(--mall-space-2);
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
 }
 </style>

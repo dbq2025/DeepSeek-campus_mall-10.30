@@ -1,0 +1,46 @@
+/**
+ * 设计令牌。所有颜色/间距/圆角只从这里取，组件内禁止写死色值。
+ * 主色沿用 Element Plus 默认 #409eff，不做自定义主题（不引 sass）。
+ */
+:root {
+  /* 主色与语义色 */
+  --mall-primary: #409eff;
+  --mall-primary-light: #ecf5ff;
+  --mall-success: #67c23a;
+  --mall-warning: #e6a23c;
+  --mall-danger: #f56c6c;
+  --mall-info: #909399;
+  --mall-price: #f56c6c;
+
+  /* 文字 */
+  --mall-text-1: #303133;
+  --mall-text-2: #606266;
+  --mall-text-3: #909399;
+  --mall-text-4: #c0c4cc;
+
+  /* 边框与背景 */
+  --mall-border: #dcdfe6;
+  --mall-border-light: #ebeef5;
+  --mall-bg: #f5f7fa;
+  --mall-bg-white: #ffffff;
+
+  /* 圆角 */
+  --mall-radius: 8px;
+  --mall-radius-sm: 4px;
+
+  /* 间距 */
+  --mall-space-1: 8px;
+  --mall-space-2: 16px;
+  --mall-space-3: 24px;
+
+  /* 尺寸 */
+  --mall-container: 1200px;
+  --mall-header-h: 64px;
+  --mall-admin-sider: 220px;
+  --mall-admin-sider-collapsed: 64px;
+  --mall-admin-header-h: 56px;
+
+  /* 阴影 */
+  --mall-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --mall-shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
